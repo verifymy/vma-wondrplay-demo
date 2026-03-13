@@ -5,6 +5,8 @@ import {
   DevicePreviewToggle,
   type DeviceMode,
 } from "@/components/DevicePreviewToggle";
+import { BrandToggle } from "@/components/BrandToggle";
+import { type Brand } from "@/lib/brand";
 
 const DEVICE_MAX_WIDTH: Record<DeviceMode, string> = {
   desktop: "max-w-none",
@@ -14,19 +16,37 @@ const DEVICE_MAX_WIDTH: Record<DeviceMode, string> = {
 
 export function LayoutShell({ children }: { children: React.ReactNode }) {
   const [device, setDevice] = useState<DeviceMode>("desktop");
+  const [brand, setBrand] = useState<Brand>("wondrplay");
   const isFramed = device !== "desktop";
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "/vma-mobile-delta-copy";
 
   return (
     <>
       <header className="bg-white border-b border-brand-100">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={`${process.env.NEXT_PUBLIC_BASE_PATH || "/vma-mobile-delta"}/logo.svg`}
-            alt="verifymy"
-            className="h-6"
-          />
-          <DevicePreviewToggle device={device} onDeviceChange={setDevice} />
+          <div className="flex items-center gap-3">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={`${basePath}/logo.svg`}
+              alt="verifymy"
+              className="h-6"
+            />
+            {brand === "wondrplay" && (
+              <>
+                <span className="text-brand-300 text-sm font-medium">x</span>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`${basePath}/wondrplay-logo-dark.svg`}
+                  alt="wondrplay"
+                  className="h-4"
+                />
+              </>
+            )}
+          </div>
+          <div className="flex items-center gap-3">
+            <BrandToggle brand={brand} onBrandChange={setBrand} />
+            <DevicePreviewToggle device={device} onDeviceChange={setDevice} />
+          </div>
         </div>
       </header>
 
@@ -44,7 +64,10 @@ export function LayoutShell({ children }: { children: React.ReactNode }) {
 
       <footer className="border-t border-brand-100 mt-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-sm text-brand-400">
-          <span>Powered by VerifyMy</span>
+          <span>
+            Powered by VerifyMy
+            {brand === "wondrplay" && " x Wondrplay"}
+          </span>
           <span className="text-xs text-brand-300">
             Internal use only &mdash; Do not share API responses externally
           </span>

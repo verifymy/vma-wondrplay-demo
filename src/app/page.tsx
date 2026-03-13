@@ -1,12 +1,9 @@
 "use client";
 
-import { useState } from "react";
 import { Search, Loader2 } from "lucide-react";
 import { VerificationForm } from "@/components/VerificationForm";
 import { ResultsPanel } from "@/components/ResultsPanel";
-import { VerificationTypeCard } from "@/components/VerificationTypeCard";
 import { useVerification } from "@/hooks/useVerification";
-import { VERIFICATION_TYPES, type VerificationType } from "@/lib/types";
 
 function StepBadge({ step }: { step: number }) {
   return (
@@ -18,8 +15,6 @@ function StepBadge({ step }: { step: number }) {
 
 export default function Home() {
   const { loading, error, result, submit } = useVerification();
-  const [verificationType, setVerificationType] =
-    useState<VerificationType>("identityGraph");
 
   return (
     <div>
@@ -32,39 +27,19 @@ export default function Home() {
             </div>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-brand-950">
-            Identity verification explorer
+            Reverse lookup explorer
           </h1>
           <p className="mt-3 text-sm sm:text-base text-brand-500 max-w-2xl mx-auto">
-            Enter an email address or phone number to verify identity, check
-            age, or perform a reverse lookup across supported regions.
+            Enter an email address or phone number to perform a reverse identity
+            lookup across supported regions.
           </p>
         </div>
       </section>
 
-      {/* Step 1 — Select verification type */}
-      <section className="bg-brand-50/50 py-8 sm:py-10">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <StepBadge step={1} />
-          <h2 className="mt-2 text-lg font-semibold text-brand-900">
-            Select verification type
-          </h2>
-          <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
-            {VERIFICATION_TYPES.map((info) => (
-              <VerificationTypeCard
-                key={info.id}
-                info={info}
-                selected={verificationType === info.id}
-                onSelect={() => setVerificationType(info.id)}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Step 2 — Configure parameters */}
+      {/* Step 1 — Configure parameters */}
       <section className="bg-white py-8 sm:py-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <StepBadge step={2} />
+          <StepBadge step={1} />
           <h2 className="mt-2 text-lg font-semibold text-brand-900">
             Configure parameters
           </h2>
@@ -72,7 +47,7 @@ export default function Home() {
             <VerificationForm
               loading={loading}
               onSubmit={submit}
-              verificationType={verificationType}
+              verificationType="reverseLookup"
             />
           </div>
           {error && (
@@ -83,10 +58,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Step 3 — Results */}
+      {/* Step 2 — Results */}
       <section className="bg-brand-50/50 py-8 sm:py-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <StepBadge step={3} />
+          <StepBadge step={2} />
           <h2 className="mt-2 text-lg font-semibold text-brand-900">
             Results
           </h2>
