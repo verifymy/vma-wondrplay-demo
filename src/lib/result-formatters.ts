@@ -67,6 +67,19 @@ export function humanizeKey(key: string): string {
 }
 
 /**
+ * Keys to hide from the detailed verification display (e.g. rate-limit info).
+ */
+const HIDDEN_KEYS = new Set([
+  "consumedtotal",
+  "consumedTotal",
+  "remaining",
+  "periodlimit",
+  "periodLimit",
+  "consumedthiscall",
+  "consumedThisCall",
+]);
+
+/**
  * Flatten a nested object into key-value pairs for display.
  * Limits depth to avoid deeply nested display.
  */
@@ -80,6 +93,7 @@ export function flattenForDisplay(
   if (depth > 3) return result;
 
   for (const [key, value] of Object.entries(obj)) {
+    if (HIDDEN_KEYS.has(key)) continue;
     const fullKey = prefix ? `${prefix}.${key}` : key;
     const label = humanizeKey(key);
 
