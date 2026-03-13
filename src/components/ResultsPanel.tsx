@@ -4,7 +4,6 @@ import { useState } from "react";
 import {
   Settings,
   FileText,
-  Code2,
   Copy,
   Check,
 } from "lucide-react";
@@ -73,8 +72,6 @@ function ResultBadge({ value }: { value: string }) {
 }
 
 export function ResultsPanel({ result }: Props) {
-  const [showRaw, setShowRaw] = useState(false);
-
   const items = flattenForDisplay(result.raw);
 
   // Determine method label
@@ -231,27 +228,6 @@ export function ResultsPanel({ result }: Props) {
         </div>
       </div>
 
-      {/* Raw API Response toggle */}
-      <div className="rounded-xl border border-brand-100 bg-white overflow-hidden">
-        <button
-          type="button"
-          onClick={() => setShowRaw((prev) => !prev)}
-          className="flex w-full items-center justify-between px-5 py-3 text-sm font-medium text-brand-500 hover:bg-brand-50 transition-colors"
-        >
-          <span className="inline-flex items-center gap-2">
-            <Code2 className="w-4 h-4 text-accent-600" />
-            Raw API response
-          </span>
-          <span className="text-xs text-brand-400">
-            {showRaw ? "Hide code" : "Show code"}
-          </span>
-        </button>
-        {showRaw && (
-          <pre className="overflow-auto bg-brand-950 p-4 text-xs text-brand-200 max-h-96">
-            {JSON.stringify(result.raw, null, 2)}
-          </pre>
-        )}
-      </div>
     </div>
   );
 }
