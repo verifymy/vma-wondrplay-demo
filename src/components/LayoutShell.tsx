@@ -7,6 +7,7 @@ import {
 } from "@/components/DevicePreviewToggle";
 import { BrandToggle } from "@/components/BrandToggle";
 import { type Brand } from "@/lib/brand";
+import { BrandProvider } from "@/lib/BrandContext";
 
 const DEVICE_MAX_WIDTH: Record<DeviceMode, string> = {
   desktop: "max-w-none",
@@ -50,17 +51,19 @@ export function LayoutShell({ children }: { children: React.ReactNode }) {
         </div>
       </header>
 
-      <main
-        className={`transition-all duration-300 ease-in-out mx-auto ${
-          DEVICE_MAX_WIDTH[device]
-        } ${
-          isFramed
-            ? "my-6 border border-brand-200 rounded-2xl shadow-lg bg-white overflow-hidden"
-            : ""
-        }`}
-      >
-        {children}
-      </main>
+      <BrandProvider value={brand}>
+        <main
+          className={`transition-all duration-300 ease-in-out mx-auto ${
+            DEVICE_MAX_WIDTH[device]
+          } ${
+            isFramed
+              ? "my-6 border border-brand-200 rounded-2xl shadow-lg bg-white overflow-hidden"
+              : ""
+          }`}
+        >
+          {children}
+        </main>
+      </BrandProvider>
 
       <footer className="border-t border-brand-100 mt-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-sm text-brand-400">

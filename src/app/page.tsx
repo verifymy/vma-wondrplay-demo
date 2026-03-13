@@ -4,10 +4,13 @@ import { Search, Loader2 } from "lucide-react";
 import { VerificationForm } from "@/components/VerificationForm";
 import { ResultsPanel } from "@/components/ResultsPanel";
 import { useVerification } from "@/hooks/useVerification";
+import { useBrand } from "@/lib/BrandContext";
 
-function StepBadge({ step }: { step: number }) {
+function StepBadge({ step, wondrplay }: { step: number; wondrplay?: boolean }) {
   return (
-    <span className="inline-flex items-center rounded-full bg-accent-50 px-3 py-1 text-xs font-semibold text-accent-700">
+    <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${
+      wondrplay ? "bg-[#6744E7]/10 text-[#6744E7]" : "bg-accent-50 text-accent-700"
+    }`}>
       Step {step}
     </span>
   );
@@ -15,15 +18,17 @@ function StepBadge({ step }: { step: number }) {
 
 export default function Home() {
   const { loading, error, result, submit } = useVerification();
+  const brand = useBrand();
+  const isWondrplay = brand === "wondrplay";
 
   return (
     <div>
       {/* Hero Section */}
-      <section className="bg-brand-50 py-10 sm:py-14">
+      <section className={`py-10 sm:py-14 ${isWondrplay ? "bg-[#6744E7]/5" : "bg-brand-50"}`}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">
           <div className="flex justify-center mb-4">
-            <div className="rounded-full bg-accent-100 p-3">
-              <Search className="w-6 h-6 text-accent-600" />
+            <div className={`rounded-full p-3 ${isWondrplay ? "bg-[#6744E7]/15" : "bg-accent-100"}`}>
+              <Search className={`w-6 h-6 ${isWondrplay ? "text-[#6744E7]" : "text-accent-600"}`} />
             </div>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-brand-950">
@@ -39,7 +44,7 @@ export default function Home() {
       {/* Step 1 — Configure parameters */}
       <section className="bg-white py-8 sm:py-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <StepBadge step={1} />
+          <StepBadge step={1} wondrplay={isWondrplay} />
           <h2 className="mt-2 text-lg font-semibold text-brand-900">
             Configure parameters
           </h2>
@@ -61,7 +66,7 @@ export default function Home() {
       {/* Step 2 — Results */}
       <section className="bg-brand-50/50 py-8 sm:py-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <StepBadge step={2} />
+          <StepBadge step={2} wondrplay={isWondrplay} />
           <h2 className="mt-2 text-lg font-semibold text-brand-900">
             Results
           </h2>
