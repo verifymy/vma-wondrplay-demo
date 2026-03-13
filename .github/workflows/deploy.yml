@@ -33,7 +33,7 @@ jobs:
       - run: npm run build
         env:
           NEXT_PUBLIC_HBAUTH_API_KEY: ${{ secrets.HBAUTH_API_KEY }}
-          NEXT_PUBLIC_HBAUTH_BASE_URL: https://beta-api.hbauth.io
+          NEXT_PUBLIC_HBAUTH_BASE_URL: https://api.hbauth.io
           NEXT_PUBLIC_HBAUTH_CUSTOMER_ID: hbverifymy
 
       - uses: actions/configure-pages@v4
