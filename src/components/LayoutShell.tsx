@@ -19,7 +19,7 @@ export function LayoutShell({ children }: { children: React.ReactNode }) {
   const [device, setDevice] = useState<DeviceMode>("desktop");
   const [brand, setBrand] = useState<Brand>("wondrplay");
   const isFramed = device !== "desktop";
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "/vma-mobile-delta-copy";
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "/vma-wondrplay-demo";
 
   return (
     <>
