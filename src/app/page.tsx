@@ -17,7 +17,7 @@ function StepBadge({ step, wondrplay }: { step: number; wondrplay?: boolean }) {
 }
 
 export default function Home() {
-  const { loading, error, result, submit } = useVerification();
+  const { loading, error, result, remainingTries, submit } = useVerification();
   const brand = useBrand();
   const isWondrplay = brand === "wondrplay";
 
@@ -51,9 +51,17 @@ export default function Home() {
           <div className="mt-5">
             <VerificationForm
               loading={loading}
+              disabled={remainingTries <= 0}
               onSubmit={submit}
               verificationType="reverseLookup"
             />
+          </div>
+          <div className="mt-3 flex justify-end">
+            <span className={`text-xs font-medium ${
+              remainingTries <= 5 ? "text-red-500" : "text-brand-400"
+            }`}>
+              {remainingTries} / 50 verifications remaining
+            </span>
           </div>
           {error && (
             <div className="mt-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">

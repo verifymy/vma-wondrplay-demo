@@ -16,6 +16,7 @@ const REGIONS: Region[] = ["US", "UK", "FR"];
 
 interface Props {
   loading: boolean;
+  disabled?: boolean;
   onSubmit: (params: {
     verificationType: VerificationType;
     inputType: InputType;
@@ -27,6 +28,7 @@ interface Props {
 
 export function VerificationForm({
   loading,
+  disabled = false,
   onSubmit,
   verificationType,
 }: Props) {
@@ -110,7 +112,7 @@ export function VerificationForm({
           </button>
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading || disabled}
             className="flex items-center gap-2 rounded-lg bg-accent-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent-700 disabled:opacity-60"
           >
             {loading ? (
